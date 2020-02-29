@@ -18,13 +18,15 @@ namespace Jogo_de_Xadrez
                     Tela.ImprimirTabuleiro(partida.tab);
 
                     Console.WriteLine();
-
                     Console.Write("Origem: ");
-
                     Posicao origem = Tela.LerPosicaoXadrez().toPosicao();
 
-                    Console.Write("Destino: ");
+                    Console.Clear();
+                    bool[,] posicoesPossiveis = partida.tab.peca(origem).MovimentosPossiveis();
+                    Tela.ImprimirTabuleiro(partida.tab, posicoesPossiveis);
 
+                    Console.WriteLine();
+                    Console.Write("Destino: ");
                     Posicao destino = Tela.LerPosicaoXadrez().toPosicao();
 
                     partida.executaMovimento(origem, destino);
@@ -32,7 +34,6 @@ namespace Jogo_de_Xadrez
                 }
 
 
-                Tela.ImprimirTabuleiro(partida.tab);
             }
             catch (TabuleiroException e)
             {
