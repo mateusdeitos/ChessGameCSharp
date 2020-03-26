@@ -65,8 +65,15 @@ namespace xadrez
             // Verifica se após a jogada do jogador atual, o adversário ficou em xeque
             xeque = estaEmXeque(adversaria(jogadorAtual));
 
-            turno++;
-            mudaJogador();
+            if (testeXequemate(adversaria(jogadorAtual)))
+            {
+                terminada = true;
+            }
+            else
+            {
+                turno++;
+                mudaJogador();
+            }
         }
 
 
@@ -183,6 +190,45 @@ namespace xadrez
 
             return false;
         }
+
+        public bool testeXequemate(Cor cor)
+        {
+            if (!estaEmXeque(cor))
+            {
+                return false;
+            }
+
+            foreach (Peca peca in pecasEmJogo(cor))
+            {
+                bool[,] mat = peca.movimentosPossiveis();
+
+                // Passa por todas peças em jogo do jogador atual e verifica os movimentos possíveis de cada peça.
+                // Testa cada movimento possível e faz o teste do Xeque, se o teste do xeque em alguma posição nova
+                // retornar falso, quer dizer que não está em xequemate, mas se nenhuma posição de nenhuma peça em jogo
+                // retornar falso para o teste do xeque, quer dizer que o jogador está em xequemate
+                for (int i = 0; i < tab.linhas; i++)
+                {
+                    for (int j = 0; j < tab.colunas; j++)
+                    {
+                        if (mat[i,j])
+                        {
+                            Posicao destino = new Posicao(i, j);
+                            Peca pecaCapturada = executaMovimento(peca.posicao, destino);
+                            bool testeXeque = estaEmXeque(cor);
+                            desfazMovimento(peca.posicao, destino, pecaCapturada);
+                            if (!testeXeque)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            return true;
+        }
+
         public void colocarNovaPeca(char coluna, int linha, Peca peca)
         {
             tab.colocarPeca(peca, new PosicaoXadrez(coluna, linha).toPosicao());
