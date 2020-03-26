@@ -9,7 +9,7 @@ namespace xadrez
 
         }
 
-        public override bool[,] MovimentosPossiveis()
+        public override bool[,] movimentosPossiveis()
         {
             //O Rei pode se mover para todas as direções, porém, apenas 1 posição
             bool[,] mat = new bool[tab.linhas, tab.colunas];

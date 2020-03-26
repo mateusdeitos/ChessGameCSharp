@@ -8,7 +8,7 @@ namespace xadrez
         {
 
         }
-        public override bool[,] MovimentosPossiveis()
+        public override bool[,] movimentosPossiveis()
         {
             //A torre pode se mover para esquerda/direita/acima/abaixo até que chegue no final do tabuleiro
             // ou até atingir/capturar uma peça
