@@ -42,6 +42,7 @@ namespace xadrez
         public void desfazMovimento(Posicao origem, Posicao destino, Peca pecaCapturada)
         {
             Peca p = tab.retirarPeca(destino);
+            p.decrementarQtdMovimentos();
             if (pecaCapturada != null)
             {
                 tab.colocarPeca(pecaCapturada, destino);
@@ -212,10 +213,11 @@ namespace xadrez
                     {
                         if (mat[i,j])
                         {
+                            Posicao origem = peca.posicao;
                             Posicao destino = new Posicao(i, j);
                             Peca pecaCapturada = executaMovimento(peca.posicao, destino);
                             bool testeXeque = estaEmXeque(cor);
-                            desfazMovimento(peca.posicao, destino, pecaCapturada);
+                            desfazMovimento(origem, destino, pecaCapturada);
                             if (!testeXeque)
                             {
                                 return false;
