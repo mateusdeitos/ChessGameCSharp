@@ -4,9 +4,11 @@ namespace xadrez
 {
     class Rei : Peca
     {
-        public Rei(Tabuleiro tab, Cor cor) : base(cor, tab)
-        {
+        private PartidaDeXadrez partida;
 
+        public Rei(Tabuleiro tab, Cor cor, PartidaDeXadrez partida) : base(cor, tab)
+        {
+            this.partida = partida;
         }
 
         public override bool[,] movimentosPossiveis()
@@ -31,7 +33,52 @@ namespace xadrez
 
             }
 
+            // #jogadaespecial roque
+
+            if (qtdMovimentos == 0 && !partida.xeque)
+            {
+                // #jogadaespecial roque pequeno
+
+                // Posição que a Torre tem que estar para poder fazer o roque
+                Posicao posTorre1 = new Posicao(posicao.linha, posicao.coluna + 3);
+                if (testeTorreParaRoque(posTorre1))
+                {
+                    Posicao pRei1 = new Posicao(posicao.linha, posicao.coluna + 1);
+                    Posicao pRei2 = new Posicao(posicao.linha, posicao.coluna + 2);
+
+                    if (tab.peca(pRei1) == null && tab.peca(pRei2) == null)
+                    {
+                        mat[posicao.linha, posicao.coluna + 2] = true;
+                    }
+
+                }
+
+                // #jogadaespecial roque grande
+
+                // Posição que a Torre tem que estar para poder fazer o roque
+                Posicao posTorre2 = new Posicao(posicao.linha, posicao.coluna - 4);
+                if (testeTorreParaRoque(posTorre2))
+                {
+                    Posicao pRei1 = new Posicao(posicao.linha, posicao.coluna - 1);
+                    Posicao pRei2 = new Posicao(posicao.linha, posicao.coluna - 2);
+                    Posicao pRei3 = new Posicao(posicao.linha, posicao.coluna - 3);
+
+                    if (tab.peca(pRei1) == null && tab.peca(pRei2) == null && tab.peca(pRei3) == null)
+                    {
+                        mat[posicao.linha, posicao.coluna - 2] = true;
+                    }
+
+                }
+            }
+
             return mat;
+        }
+
+        private bool testeTorreParaRoque(Posicao pos)
+        {
+            Peca p = tab.peca(pos);
+
+            return p != null && p is Torre && p.cor == cor && p.qtdMovimentos == 0;
         }
 
         private bool PodeMover(Posicao pos)

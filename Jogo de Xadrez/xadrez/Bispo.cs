@@ -45,9 +45,10 @@ namespace Jogo_de_Xadrez.xadrez
                     break;
                 }
                 pos.linha--;
+                pos.coluna++;
             }
 
-            pos.DefinirValores(posicao.linha + 1, posicao.coluna - 1);
+            pos.DefinirValores(posicao.linha - 1, posicao.coluna - 1);
             //NO
             while (tab.posicaoValida(pos) && PodeMover(pos))
             {
@@ -56,7 +57,8 @@ namespace Jogo_de_Xadrez.xadrez
                 {
                     break;
                 }
-                pos.linha++;
+                pos.linha--;
+                pos.coluna--;
             }
 
             pos.DefinirValores(posicao.linha + 1, posicao.coluna - 1);
@@ -68,7 +70,9 @@ namespace Jogo_de_Xadrez.xadrez
                 {
                     break;
                 }
+                pos.linha++;
                 pos.coluna--;
+
             }
 
             pos.DefinirValores(posicao.linha + 1, posicao.coluna + 1);
@@ -80,6 +84,7 @@ namespace Jogo_de_Xadrez.xadrez
                 {
                     break;
                 }
+                pos.linha++;
                 pos.coluna++;
             }
 
