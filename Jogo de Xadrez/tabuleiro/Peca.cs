@@ -45,7 +45,7 @@ namespace tabuleiro
 
         public abstract bool[,] movimentosPossiveis();
 
-        internal bool podeMoverPara(Posicao destino)
+        internal bool movimentoPossivel(Posicao destino)
         {
             return movimentosPossiveis()[destino.linha, destino.coluna];
         }
